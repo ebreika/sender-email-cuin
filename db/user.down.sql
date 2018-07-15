@@ -1,0 +1,3 @@
+
+DROP TABLE IF EXISTS users CASCADE;
+DROP FUNCTION IF EXISTS  update_modified_column();
