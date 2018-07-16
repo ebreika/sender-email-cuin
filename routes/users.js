@@ -23,7 +23,7 @@ router.post('/', function (req, res, next) {
     req.checkBody("phone", "Enter a valid phone").isMobilePhone('any');
     var errors = req.validationErrors();
     if (errors) {
-        res.send(errors);
+        res.status(400).send(errors);
         return;
     } else {
         let user = new User(0, req.body.name, req.body.email, req.body.phone);
@@ -37,7 +37,7 @@ router.post('/', function (req, res, next) {
         service.saveUser(user)
         sendMailToCustomer(data);
         sendMailToOwner(data);
-        res.json({message: 'OK'});
+        res.status(200).json({message: 'OK'});
     }
 
 
