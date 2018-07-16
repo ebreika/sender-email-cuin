@@ -1,8 +1,10 @@
-var pg = require('pg');
+const { Client } = require('pg');
+const client = new Client({
+    connectionString: process.env.DATABASE_URL,
+    ssl: true,
+});
 
-//var conString = "postgres://postgres:password@localhost:5433/cuin?sslmode=disable";
-
-module.exports= new pg.Client();
+module.exports= client
 
 
 
