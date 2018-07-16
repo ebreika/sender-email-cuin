@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var sgMail = require('@sendgrid/mail');
 var validator = require('validator');
 var path = require('path');
 var fs = require("fs");
@@ -37,7 +36,7 @@ router.post('/', function (req, res, next) {
         };
         service.saveUser(user)
         sendMailToCustomer(data);
-        //sendMailToOwner(data);
+        sendMailToOwner(data);
         res.json({message: 'OK'});
     }
 
@@ -67,17 +66,20 @@ function sendMailToCustomer(data) {
 
 // Send email for customer
 function sendMailToOwner(data) {
-    let sendgridkey = process.env.SENDGRID_KEY;
-    sgMail.setApiKey(sendgridkey);
     const compiledFunction = pug.compileFile(path.join(__dirname, '../templates/email-information.pug'));
     const msg = {
         to: data.sender,
         from: data.sender,
-        subject: 'Cita Adagio',
-        text: 'Nos pondremos en contacto lo mas pronto posible',
-        html: compiledFunction({name: data.name, phone: data.phone, email: data.receiver, message: data.message})
+        subject: 'Contactar ',
+        text: 'Contacto ',
+        html: compiledFunction({name: data.name, phone: data.phone, email: data.receiver})
     }
-    sgMail.send(msg);
+    transporter.sendMail(msg, (error, info) => {
+        if (error) {
+            return console.log(error);
+        }
+        console.log('Message sent: %s', info.messageId);
+    });
 }
 
 
