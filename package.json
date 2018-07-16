@@ -19,6 +19,7 @@
     "sendgrid": "^5.2.3",
     "validator": "^10.3.0",
     "express-validator": "^5.2.0",
-    "pg":"^7.4.3"
+    "pg":"^7.4.3",
+    "nodemailer":"^4.6.7"
   }
 }
