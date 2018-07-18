@@ -29,6 +29,7 @@ router.post('/', function (req, res, next) {
         let user = new User(0, req.body.name, req.body.email, req.body.phone);
 
         var data = {
+            user:user,
             sender: process.env.MAIL_USER,
             receiver: req.body.email,
             name: req.body.name,
@@ -47,6 +48,7 @@ router.post('/', function (req, res, next) {
 // Send email for customer
 function sendMailToCustomer(data) {
     var file = fs.readFileSync(path.join(__dirname, '../public/template.html'), "utf8");
+    file=file.replace('$user.name',data.user.firstName)
     const msg = {
         from: data.sender,
         to: data.receiver,
